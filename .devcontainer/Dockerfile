@@ -10,6 +10,14 @@ RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
 
 RUN npm install -g @angular/cli
 
+RUN apt-get update && apt-get install -y \
+    chromium \
+    --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the Chrome binary path
+ENV CHROME_BIN=/usr/bin/chromium
+
 # Set `DEVCONTAINER` environment variable to help with orientation
 ENV DEVCONTAINER=true
 EXPOSE 4200
