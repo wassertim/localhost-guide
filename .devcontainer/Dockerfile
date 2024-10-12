@@ -18,6 +18,13 @@ RUN apt-get update && apt-get install -y \
 # Set the Chrome binary path
 ENV CHROME_BIN=/usr/bin/chromium
 
+RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
+    && mkdir /commandhistory \
+    && touch /commandhistory/.bash_history \
+    && chown -R $USERNAME /commandhistory \
+    && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc"
+
+
 # Set `DEVCONTAINER` environment variable to help with orientation
 ENV DEVCONTAINER=true
 EXPOSE 4200
